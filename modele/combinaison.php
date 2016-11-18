@@ -39,7 +39,7 @@
       return $this->combinaison;
     }
 
-    //Fonction qui retourne la combinaison sous forme de tableau
+    //Fonction qui retourne la combinaison sous forme de tableau de couleurs RGB
     //Post-condition retourne un Array contenant les couleurs de chaque pastille sous forme de valeur RGB;
     public function toColor{
       $color = array();
@@ -79,10 +79,40 @@
             break;
 
           default:
-            # code...
+              //Ne sera jamais executé
+              $color[i] = "rgb(255, 255, 255)";
             break;
         }
       }
+
+      //Méthode qui permet de comparer une combinaison à la combinaison actuelle
+      //Pré-condition : une combinaison doit être passée en paramètre
+      //Post-condition : retourne un tableau contenant le nombre de pions noirs et de pions blancs
+      public function comparerA($combi){
+        $comb = $combi->toArray();
+        //On initialise le tableau de validation qui sera retourné par la méthode
+        $pionsNoirBlanc = array(0,0);
+        for ($i=0; $i < 4 ; $i++){
+          if($this->combinaison[$i] == $comb[$i]){
+            // On ajoute un pion noir
+            $pionsNoirBlanc[0]++;
+          }else{
+            for($j=0; $j < 4 ; $j++){
+              if($this->combinaison[$j] == $comb[$i]){
+                  // On ajoute un pion blanc
+                  $pionsNoirBlanc[1]++;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    //Méthode qui vérifie si deux combinaisons sont identiques
+    //Pré-condition une combinaison doit être donnée en paramètre
+    //Post-condition renvoie un booléen qui vaut vrai si les combinaisons sont authentiques et faux si les combinaison sont différentes
+    public function estIdentiqueA($comb){
+      return $this->comparerA($comb)[0]==4;
     }
 
   }
